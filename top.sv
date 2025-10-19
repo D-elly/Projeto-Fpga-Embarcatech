@@ -6,35 +6,60 @@ module top#(
     input wire active,
     input wire reset,
 
-    output wire [16:0] audio_out,
-    output wire[1:0] count_bit
+    output wire [15:0] audio_out,
+    output wire data_ready
 );
 
-process (clock_max, reset)
+typedef enum logic {
+        IDLE,    
+        RECEIVING  
+    } state_t;
+
+state_t state;       
+logic [15:0] shift_reg; 
+logic [3:0]  bit_counter;
+
+always_ff @(posedge clock_max or posedge reset)
     begin
         if(reset = '1') begin  //implementação do botão de desligar ou desativar comunicação
-            state = idle;
-            shift_reg <= (others => '0');
-            bit_counter <= (others => '0');
+            state = IDLE;
+            shift_reg <= 16'b0000000000000000;
+            bit_counter <= 4'b0000;
+            data_ready <= 1'b0;
         end
 
-        elseif rising_edge(clock_max) then //a cada pulso de clock do pico, executar
+        else begin //a cada pulso de clock do pico, executar
             case(state)
-                idle: //modo ociosos, sem novos dados chegando
-                    if(active = '0') begin 
-                        state => idle;
-                    end else if(active = '1') begin
-                        state => receiving;
-                        bit_counter <= (others => '0');
-                        shift_reg <= (others => '0');
-                    end 
-                receiving: //estado em que a comunicação está acontecendo, recebendo dados do pico
+                IDLE: begin //modo ociosos, sem novos dados chegando
+                    if(active == '0') begin 
+                        state => IDLE;
+                    end else if(active == '1') begin
+                        state => RECEIVING;
+                        shift_reg <= 16'b0000000000000000;
+                        bit_counter <= 4'b0000;
+                    end
+                end  
+
+                RECEIVING: begin //estado em que a comunicação está acontecendo, recebendo dados do pico
                     if(active = '0') begin
-                        state = idle;
-                    end else if rising_edge(sclk_in) begin
-                        if()
+                        state = IDLE;
+                    end else if (posedge sclk) begin
+                        shift_reg <= {shift_reg[14:0], mosi_in};
+
+                        end if(bit_counter = 4d'15) begin
+                            audio_out <= {shift_reg[14:0], mosi_in};
+                            state <= RECEIVING;
+                            shift_reg <= 16'b0000000000000000;
+                            data_ready <= 1'b1;
+                            bit_counter <= 4'b0000;
+
+                        end else begin
+                            bit_counter <= bit_counter + 1'b1;
+                        end
+                end 
 
             endcase
+        end 
     end 
 
 endmodule
