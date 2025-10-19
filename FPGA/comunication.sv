@@ -1,12 +1,13 @@
 module comunication #(
-    parameter int unsigned clock_max 25_000_000
+    parameter int unsigned clock_max = 25_000_000
 )(
+    input logic clk_in,
     input wire sclk_in, //clock vindo do pico
     input wire mosi_in, //input data from pico 
     input wire active,
     input wire reset,
 
-    output wire [15:0] audio_out,  //testar se pacotes de 16 bits fazem uma transnmissão lisa
+    output logic [15:0] audio_out,  //testar se pacotes de 16 bits fazem uma transnmissão lisa
     output logic data_ready
 );
 
@@ -31,32 +32,36 @@ assign sclk_posedge = (sclk_d1 == 1'b1) && (sclk_d2 == 1'b0);
 
 always_ff @(posedge clock_max or posedge reset)
     begin
-        if(reset = '1') begin  //implementação do botão de desligar ou desativar comunicação
-            state = IDLE;
+        if(reset == 1'b1) begin  //implementação do botão de desligar ou desativar comunicação
+            state <= IDLE;
             shift_reg <= 16'b0000000000000000;
             bit_counter <= 4'b0000;
             data_ready <= 1'b0;
-        end
+        
 
-        else begin //a cada pulso de clock do pico, executar
+        end else begin //a cada pulso de clock do pico, executar
+            data_ready <= 1'b0;
+
             case(state)
                 IDLE: begin //modo ociosos, sem novos dados chegando
-                    if(active == '0') begin 
-                        state => IDLE;
-                    end else if(active == '1') begin
-                        state => RECEIVING;
+                    if(active == 1'b0) begin 
+                        state <= IDLE;
+                        data_ready <= 1'b0;
+
+                    end else if(active == 1'b1) begin
+                        state <= RECEIVING;
                         shift_reg <= 16'b0000000000000000;
                         bit_counter <= 4'b0000;
                     end
                 end  
 
                 RECEIVING: begin //estado em que a comunicação está acontecendo, recebendo dados do pico
-                    if(active = '0') begin
+                    if(active == 1'b0) begin
                         state = IDLE;
                     end else if (sclk_posedge) begin
                         shift_reg <= {shift_reg[14:0], mosi_in};
 
-                        if(bit_counter == 4d'15) begin
+                        if(bit_counter == 4'd15) begin
                             audio_out <= {shift_reg[14:0], mosi_in};
                             state <= RECEIVING;
                             shift_reg <= 16'b0000000000000000;
