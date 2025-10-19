@@ -1,0 +1,50 @@
+# ============================================================
+# CLOCK
+# ============================================================
+LOCATE    COMP "clk" SITE "P3";
+IOBUF     PORT "clk" IO_TYPE=LVCMOS33;
+FREQUENCY PORT "clk" 25 MHz;
+
+# ============================================================
+# LED (blink)
+# ============================================================
+LOCATE COMP "led" SITE "L2";
+IOBUF  PORT "led" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;
+
+# ============================================================
+# CONTROLES (RESET, DIR, LOAD, MODO, PAUSE) — entradas com pull-up
+# Ordem: PT65B, PT65A, PL14D, PT67B, PL23D
+# ============================================================
+LOCATE COMP "reset" SITE "B20"; IOBUF PORT "reset" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PT67B B20
+LOCATE COMP "dir"   SITE "A18"; IOBUF PORT "dir"   IO_TYPE=LVCMOS33 PULLMODE=UP;  # PT65A A18
+LOCATE COMP "load"  SITE "E2";  IOBUF PORT "load"  IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL23D E2
+LOCATE COMP "modo"  SITE "C2"; IOBUF PORT "modo"  IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL14D C2 
+LOCATE COMP "pause" SITE "B19";  IOBUF PORT "pause" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PT65B B19
+
+# ============================================================
+# ENTRADA DE DADOS (data_in[8:0]) — entradas com pull-up
+# Ordem: PL29A, PL29B, PL14A, PL35A, PL5D, PR14D, PL29D, PL35B, PL14C
+# ============================================================
+LOCATE COMP "data_in[0]" SITE "J4";  IOBUF PORT "data_in[0]" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL29A
+LOCATE COMP "data_in[1]" SITE "J5";  IOBUF PORT "data_in[1]" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL29B
+LOCATE COMP "data_in[2]" SITE "A2";  IOBUF PORT "data_in[2]" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL14A
+LOCATE COMP "data_in[3]" SITE "K4";  IOBUF PORT "data_in[3]" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL35A
+LOCATE COMP "data_in[4]" SITE "B3";  IOBUF PORT "data_in[4]" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL5D
+LOCATE COMP "data_in[5]" SITE "E19"; IOBUF PORT "data_in[5]" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PR14D
+LOCATE COMP "data_in[6]" SITE "K3";  IOBUF PORT "data_in[6]" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL29D
+LOCATE COMP "data_in[7]" SITE "K5";  IOBUF PORT "data_in[7]" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL35B
+LOCATE COMP "data_in[8]" SITE "B2";  IOBUF PORT "data_in[8]" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL14C
+
+# ============================================================
+# SAÍDA DE DADOS (q[8:0]) — DRIVE=8 + SLEWRATE=SLOW
+# Ordem: PR23D, PR38D, PR32C, PR26A, PR29C, PR17D, PR29D, PR35A, PR47D
+# ============================================================
+LOCATE COMP "q[0]" SITE "G20"; IOBUF PORT "q[0]" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR17D G20
+LOCATE COMP "q[1]" SITE "L18"; IOBUF PORT "q[1]" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR29C L18
+LOCATE COMP "q[2]" SITE "L20"; IOBUF PORT "q[2]" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR26A L20
+LOCATE COMP "q[3]" SITE "N18"; IOBUF PORT "q[3]" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR32C N18
+LOCATE COMP "q[4]" SITE "P18"; IOBUF PORT "q[4]" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR38D P18
+LOCATE COMP "q[5]" SITE "P17"; IOBUF PORT "q[5]" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR32D P17
+LOCATE COMP "q[6]" SITE "M18"; IOBUF PORT "q[6]" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR29D M18
+LOCATE COMP "q[7]" SITE "N17"; IOBUF PORT "q[7]" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR35A N18
+LOCATE COMP "q[8]" SITE "T17"; IOBUF PORT "q[8]" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR47D T17
