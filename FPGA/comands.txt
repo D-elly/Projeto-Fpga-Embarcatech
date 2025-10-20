@@ -1,0 +1,7 @@
+executaveis no terminal vs code
+
+1 - iverilog -g2012 -o my_sim comunication.sv tb_comunication.sv
+
+2 - vvp my_sim
+
+3 - gtkwave dump.vcd

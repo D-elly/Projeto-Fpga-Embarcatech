@@ -4,21 +4,19 @@
 LOCATE    COMP "clk" SITE "P3";
 IOBUF     PORT "clk" IO_TYPE=LVCMOS33;
 FREQUENCY PORT "clk" 25 MHz;
+# ============================================================
+
 
 # ============================================================
-# LED (blink)
-# ============================================================
-LOCATE COMP "led" SITE "L2";
-IOBUF  PORT "led" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;
-
-# ============================================================
-# CONTROLES (RESET, DIR, LOAD, MODO, PAUSE) — entradas com pull-up
+# MODULE COMUNICATION (SCLK_IN, MOSI_IN, ACTIVE, RESET,) — entradas com pull-up
 # Ordem: PT65B, PT65A, PL14D, PT67B, PL23D
 # ============================================================
-LOCATE COMP "reset" SITE "B20"; IOBUF PORT "reset" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PT67B B20
-LOCATE COMP "dir"   SITE "A18"; IOBUF PORT "dir"   IO_TYPE=LVCMOS33 PULLMODE=UP;  # PT65A A18
-LOCATE COMP "load"  SITE "E2";  IOBUF PORT "load"  IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL23D E2
-LOCATE COMP "modo"  SITE "C2"; IOBUF PORT "modo"  IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL14D C2 
+LOCATE COMP "sclk_in" SITE "B20"; IOBUF PORT "sclk_in" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PT67B B20
+LOCATE COMP "mosi_in"   SITE "A18"; IOBUF PORT "mosi_in"   IO_TYPE=LVCMOS33 PULLMODE=UP;  # PT65A A18
+LOCATE COMP "active"  SITE "E2";  IOBUF PORT "active"  IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL23D E2
+LOCATE COMP "reset"  SITE "C2"; IOBUF PORT "reset"  IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL14D C2 
+
+#NÃO ESTÁ SENDO USADO
 LOCATE COMP "pause" SITE "B19";  IOBUF PORT "pause" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PT65B B19
 
 # ============================================================
