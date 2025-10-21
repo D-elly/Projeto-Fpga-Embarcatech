@@ -9,8 +9,8 @@ module comunication #(
     input logic active,
     input logic reset,
 
+    output logic data_ready,
     output logic [15:0] audio_out,  //testar se pacotes de 16 bits fazem uma transnmissão lisa
-    output logic data_ready
 );
 
 typedef enum logic {
