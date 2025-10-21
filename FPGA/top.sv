@@ -15,6 +15,7 @@ logic [15:0] original_audio; //faixa de audio original de comunication.sv
 logic [15:0] modified_audio; //faixa de saida de modulos de efeito
 logic [15:0] output_audio;  //faixa que irá para saida do fpga
 
+
 //copia modulo comunication
     comunication #(.clock_max(clock_max) 
         )u_comunication(
@@ -28,13 +29,18 @@ logic [15:0] output_audio;  //faixa que irá para saida do fpga
     eff_1 #(.clock_max(clock_max) 
         )u_eff_1(
             .clk_25mhz(clk_25mhz), .reset(reset), 
-            .data_receive(data_is_ready), .audio_in(original_audio),
+            .data_ready(data_is_ready), .audio_in(original_audio),
             .audio_out(modified_audio)
         );
 
-//copia modulo dac_driver
-    dac_driver #()(
+logic audio_clk = 400; //clock de teste para frequência do audio
 
+//copia modulo dac_driver
+    dac_driver #(.clock_max(clock_max))(
+            .clk_25mhz(clk_25mhz), .reset(reset), 
+            .data_ready(data_is_ready), .audio_in(output_audio),
+            .sclk_out(audio_clk), .mosi_out, 
+            .active_out,
     );
 
 
