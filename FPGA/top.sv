@@ -10,9 +10,9 @@ module top#(
     input logic com_sclk_in, com_mosi_in, com_active
 );
 
-logic data_ready;
-logic [15:0] modified_audio; //faixa de saida de modulos de efeito
+logic data_is_ready;  //sinal interno do top-level
 logic [15:0] original_audio; //faixa de audio original de comunication.sv
+logic [15:0] modified_audio; //faixa de saida de modulos de efeito
 logic [15:0] output_audio;  //faixa que irá para saida do fpga
 
 //copia modulo comunication
@@ -20,13 +20,17 @@ logic [15:0] output_audio;  //faixa que irá para saida do fpga
         )u_comunication(
             .clk_25mhz(clk_25mhz), .sclk_in(com_sclk_in), 
             .mosi_in(com_mosi_in), .active(com_active),
-            .reset(reset), .audio_out(original_audio)
+            .reset(reset), .audio_out(original_audio),
+            .data_ready(data_is_ready)
         );
 
 //copia modulo eff_1
-    eff_1 #()(
-
-    );
+    eff_1 #(.clock_max(clock_max) 
+        )u_eff_1(
+            .clk_25mhz(clk_25mhz), .reset(reset), 
+            .data_receive(data_is_ready), .audio_in(original_audio),
+            .audio_out(modified_audio)
+        );
 
 //copia modulo dac_driver
     dac_driver #()(
