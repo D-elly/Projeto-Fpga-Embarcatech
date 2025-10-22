@@ -55,6 +55,5 @@
   "C_Cpp_Runner.useLeakSanitizer": false,
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
-  "C_Cpp_Runner.msvcSecureNoWarnings": false,
-  "cmake.sourceDirectory": "C:/Users/Maker X/Documents/projeto_fpga/Projeto-Fpga-Embarcatech/pico_sd_card"
+  "C_Cpp_Runner.msvcSecureNoWarnings": false
 }

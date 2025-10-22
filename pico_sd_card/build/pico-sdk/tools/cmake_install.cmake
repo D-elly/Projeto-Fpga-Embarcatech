@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Maker X/.pico-sdk/sdk/2.1.1/tools
+# Install script for directory: C:/Users/55999/.pico-sdk/sdk/2.1.1/tools
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,12 +34,12 @@ endif()
 
 # Set path to fallback-tool for dependency-resolution.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Users/Maker X/.pico-sdk/toolchain/14_2_Rel1/bin/arm-none-eabi-objdump.exe")
+  set(CMAKE_OBJDUMP "C:/Users/55999/.pico-sdk/toolchain/14_2_Rel1/bin/arm-none-eabi-objdump.exe")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Users/Maker X/Documents/projeto_fpga/Projeto-Fpga-Embarcatech/pico_sd_card/build/pico-sdk/tools/install_local_manifest.txt"
+  file(WRITE "C:/Users/55999/Documents/Embartech 2024.2/Residencia/Projetos/Fase_FPGA/pico_sd_card/build/pico-sdk/tools/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()
