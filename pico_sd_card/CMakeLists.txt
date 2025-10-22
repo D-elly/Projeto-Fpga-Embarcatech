@@ -34,8 +34,8 @@ project(pico_sd_card C CXX ASM)
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
-
-add_executable(pico_sd_card pico_sd_card.c )
+add_subdirectory(CartaoSD)
+add_executable(pico_sd_card pico_sd_card.cpp )
 
 pico_set_program_name(pico_sd_card "pico_sd_card")
 pico_set_program_version(pico_sd_card "0.1")
@@ -46,11 +46,14 @@ pico_enable_stdio_usb(pico_sd_card 1)
 
 # Add the standard library to the build
 target_link_libraries(pico_sd_card
-        pico_stdlib)
+        pico_stdlib
+        cartao_sd
+        )
 
 # Add the standard include files to the build
 target_include_directories(pico_sd_card PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/CartaoSD/src/ff15
 )
 
 # Add any user requested libraries

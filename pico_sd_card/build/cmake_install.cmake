@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/55999/Documents/Embartech 2024.2/Residencia/Projetos/Fase_FPGA/pico_sd_card
+# Install script for directory: C:/Users/Maker X/Documents/projeto_fpga/Projeto-Fpga-Embarcatech/pico_sd_card
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,19 +34,20 @@ endif()
 
 # Set path to fallback-tool for dependency-resolution.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Users/55999/.pico-sdk/toolchain/14_2_Rel1/bin/arm-none-eabi-objdump.exe")
+  set(CMAKE_OBJDUMP "C:/Users/Maker X/.pico-sdk/toolchain/14_2_Rel1/bin/arm-none-eabi-objdump.exe")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/Users/55999/Documents/Embartech 2024.2/Residencia/Projetos/Fase_FPGA/pico_sd_card/build/pico-sdk/cmake_install.cmake")
+  include("C:/Users/Maker X/Documents/projeto_fpga/Projeto-Fpga-Embarcatech/pico_sd_card/build/pico-sdk/cmake_install.cmake")
+  include("C:/Users/Maker X/Documents/projeto_fpga/Projeto-Fpga-Embarcatech/pico_sd_card/build/CartaoSD/cmake_install.cmake")
 
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Users/55999/Documents/Embartech 2024.2/Residencia/Projetos/Fase_FPGA/pico_sd_card/build/install_local_manifest.txt"
+  file(WRITE "C:/Users/Maker X/Documents/projeto_fpga/Projeto-Fpga-Embarcatech/pico_sd_card/build/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()
 if(CMAKE_INSTALL_COMPONENT)
@@ -62,6 +63,6 @@ else()
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Users/55999/Documents/Embartech 2024.2/Residencia/Projetos/Fase_FPGA/pico_sd_card/build/${CMAKE_INSTALL_MANIFEST}"
+  file(WRITE "C:/Users/Maker X/Documents/projeto_fpga/Projeto-Fpga-Embarcatech/pico_sd_card/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()
