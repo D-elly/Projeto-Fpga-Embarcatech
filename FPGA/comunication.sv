@@ -10,7 +10,7 @@ module comunication #(
     input logic reset,
 
     output logic data_ready,
-    output logic [15:0] audio_out,  //testar se pacotes de 16 bits fazem uma transnmissão lisa
+    output logic [15:0] audio_out  //testar se pacotes de 16 bits fazem uma transnmissão lisa
 );
 
 typedef enum logic {
@@ -30,7 +30,7 @@ always_ff @(posedge clk_25mhz) begin
         sclk_d2 <= sclk_d1;
 end 
 
-assign sclk_posedge = (sclk_d1 == 1'b1) && (sclk_d2 == 1'b0);
+assign logic sclk_posedge = (sclk_d1 == 1'b1) && (sclk_d2 == 1'b0);
 
 always_ff @(posedge clk_25mhz or posedge reset)
     begin
@@ -39,6 +39,7 @@ always_ff @(posedge clk_25mhz or posedge reset)
             shift_reg <= 16'b0000000000000000;
             bit_counter <= 4'b0000;
             data_ready <= 1'b0;
+            audio_out <= 16'b0000000000000000;
         
 
         end else begin //a cada pulso de clock do pico, executar
@@ -48,7 +49,6 @@ always_ff @(posedge clk_25mhz or posedge reset)
 
             case(state)
                 IDLE: begin //modo ociosos, sem novos dados chegando
-            
                     if(active == 1'b1) begin
                         state <= RECEIVING;
                         shift_reg <= 16'b0000000000000000;
@@ -72,7 +72,7 @@ always_ff @(posedge clk_25mhz or posedge reset)
                         end else begin
                             bit_counter <= bit_counter + 1'b1;
                         end
-                end
+                    end
                 end 
 
             endcase

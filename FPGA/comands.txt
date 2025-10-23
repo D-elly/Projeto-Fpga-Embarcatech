@@ -1,4 +1,4 @@
-executaveis no terminal vs code
+executaveis no terminal vs code, testbanches
 
 1 - iverilog -g2012 -o my_sim comunication.sv tb_comunication.sv
 
