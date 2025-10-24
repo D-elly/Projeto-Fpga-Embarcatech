@@ -13,6 +13,15 @@
 #define PINO_SPI_SCK_CARTAO 18u
 #define PINO_SPI_CS_CARTAO 17u
 
+//comunicação pico -> FPGA
+
+//#define SPI_CARTAO spi0 testar depois se é problemático
+#define PINO_SPI_MISO_FPGA 0u
+#define PINO_SPI_MOSI_FPGA 3u
+#define PINO_SPI_SCK_FPGA 2u
+#define PINO_SPI_CS_FPGA 1u
+
+
 
 // ==========================================================
 // NOVA FUNÇÃO PARA LISTAR O DIRETÓRIO

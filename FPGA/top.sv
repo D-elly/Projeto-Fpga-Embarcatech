@@ -5,13 +5,13 @@ module top#(
     //entradas globais
     input logic clk_25mhz, reset, 
 
+    //pinos de entrada de dados SPI, comunication.sv
+    input logic com_sclk_in, com_mosi_in, com_active,
+
     //pinos de saida de dados do dac_driver.sv
     output logic spi_audio_clk, 
-    output logic [11:0] spi_miso_out, 
-    output logic spi_active_out,
-
-    //pinos de entrada de dados SPI, comunication.sv
-    input logic com_sclk_in, com_mosi_in, com_active
+    output logic [11:0] spi_mosi_out, 
+    output logic spi_active_out
 );
 
 logic data_is_ready;  //sinal interno do top-level
@@ -40,16 +40,17 @@ logic modified_status; //armazena se aplicação de efeito terminou
         );
 
 //passagem da faixa de audio, original ou modificada, 
-output_audio = (reset)? original_audio : modified_audio;
+assign output_audio = (reset)? original_audio : modified_audio;
 
 //copia modulo dac_driver
-    dac_driver #(.clock_max(clock_max),  .audio_clock(audio_clk) )(
+    dac_driver #(.clock_max(clock_max) 
+        )u_dac_driver(
             //entradas do fpga -> dac
-            .mosi_in(output_audio),
             .data_ready(data_ready),
+            .mosi_in(output_audio),
 
             //saidas do dac -> amplificador
-            .sclk_out(audio_clk), .miso_out(spi_miso_out), 
+            .sclk_out(sclk_out), .miso_out(spi_miso_out), 
             .active_out(spi_active_out)
     );
 

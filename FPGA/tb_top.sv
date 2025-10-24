@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module tb_pedal_top;
+module tb_top;
 
     // --- 1. Constantes ---
     localparam int CLK_PERIOD           = 40;  // 40 ns = 25MHz
@@ -23,20 +23,21 @@ module tb_pedal_top;
 
     // --- 3. Instanciar o DUT (Device Under Test) ---
     // Conecta os sinais 'tb_' às entradas e 'w_' às saídas do pedal_top
-    pedal_top dut (
+    top dut (
         .clk_25mhz      (tb_clk_25mhz),
         .reset          (tb_reset),
         
-        .spi_pico_sclk  (tb_spi_pico_sclk),
-        .spi_pico_mosi  (tb_spi_pico_mosi),
-        .spi_pico_cs    (tb_spi_pico_cs),
+        //conexões pico->fpga modulo comunication
+        .spi_audio_clk  (tb_spi_pico_sclk),
+        .spi_miso_out  (tb_spi_pico_mosi),
+        .spi_active_out    (tb_spi_pico_cs),
         
-        .bypass_switch  (tb_bypass_switch),
+        //.bypass_switch  (tb_bypass_switch),
         
-        .spi_dac_sclk   (w_spi_dac_sclk),
-        .spi_dac_mosi   (w_spi_dac_mosi),
-        .spi_dac_cs     (w_spi_dac_cs),
-        .spi_dac_miso   (tb_spi_dac_miso) 
+        //conexões modulo dac_driver
+        .spi_audio_clk   (w_spi_dac_sclk),
+        .spi_mosi_out  (w_spi_dac_mosi),
+        .spi_active_out     (w_spi_dac_cs)
     );
 
     // --- 4. Gerador de Clock Principal ---
@@ -70,7 +71,7 @@ module tb_pedal_top;
     // --- 6. Sequência de Teste Principal ---
     initial begin
         $dumpfile("dump_top.vcd"); // Nome diferente para não sobrescrever o anterior
-        $dumpvars(0, tb_pedal_top); // Monitora todos os sinais deste testbench e do DUT
+        $dumpvars(0, tb_top); // Monitora todos os sinais deste testbench e do DUT
 
         $display("Iniciando simulação do pedal_top... Reset ativado.");
         // Inicializa todas as entradas

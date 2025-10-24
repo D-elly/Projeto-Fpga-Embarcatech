@@ -2,7 +2,6 @@ module dac_driver #(
     parameter int unsigned clock_max = 25_000_000
 )(
     //recepção de dados de modulos eff
-    input logic audio_clock,  
 
     input logic data_ready, 
     input logic [15:0] mosi_in,
@@ -13,6 +12,8 @@ module dac_driver #(
     output logic active_out
 );
 
+
+logic audio_clock = 400;
 assign miso_out = mosi_in[15:4];
 
 endmodule
