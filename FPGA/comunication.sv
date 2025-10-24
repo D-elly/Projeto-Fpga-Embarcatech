@@ -30,7 +30,7 @@ always_ff @(posedge clk_25mhz) begin
         sclk_d2 <= sclk_d1;
 end 
 
-logic sclk_posedge;
+logic sclk_posedge;  //por algum motivo não funcionou quando criei e atribui junto
 assign sclk_posedge = (sclk_d1 == 1'b1) && (sclk_d2 == 1'b0);
 
 always_ff @(posedge clk_25mhz or posedge reset)

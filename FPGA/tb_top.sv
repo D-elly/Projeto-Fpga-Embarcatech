@@ -18,7 +18,7 @@ module tb_top;
 
     // Sinais para conectar às SAÍDAS do DUT (pedal_top)
     wire         w_spi_dac_sclk;
-    wire         w_spi_dac_mosi;
+    wire        [15:0] w_spi_dac_mosi;
     wire         w_spi_dac_cs;
 
     // --- 3. Instanciar o DUT (Device Under Test) ---
@@ -27,10 +27,10 @@ module tb_top;
         .clk_25mhz      (tb_clk_25mhz),
         .reset          (tb_reset),
         
-        //conexões pico->fpga modulo comunication
-        .spi_audio_clk  (tb_spi_pico_sclk),
-        .spi_miso_out  (tb_spi_pico_mosi),
-        .spi_active_out    (tb_spi_pico_cs),
+        //conexões fpga->dac modulo comunication
+        .com_sclk_in  (tb_spi_pico_sclk),
+        .com_mosi_in  (tb_spi_pico_mosi),
+        .com_active    (tb_spi_pico_cs),
         
         //.bypass_switch  (tb_bypass_switch),
         
@@ -100,18 +100,19 @@ module tb_top;
         // Espera o sinal INTERNO 'data_is_ready' do DUT pulsar.
         // Precisamos usar o caminho hierárquico para acessá-lo.
         @(posedge dut.data_is_ready); 
-        $display("... Pulso 'data_is_ready' (interno do DUT) detectado!");
+        $display("... Pulso 'data_is_ready' (interno do DUT) detectado!(%h)", dut.data_is_ready);
 
         // Espera mais um ciclo para o MUX atualizar sua saída
         @(posedge tb_clk_25mhz);
 
         // Verifica o sinal INTERNO 'audio_selected_16b' do DUT.
         // Este é o sinal que DEVE ir para o dac_driver.
-        $display("... Verificando sinal na entrada do dac_driver ('dut.audio_selected_16b')...");
-        assert (dut.audio_selected_16b == 16'hC0DE)
-            else $error("FALHA PASSTHROUGH: Valor esperado na entrada do DAC Driver era C0DE, mas foi %h", dut.audio_selected_16b);
+        $display("... Verificando sinal na entrada do dac_driver ('dut.output_audio')...");
+        assert (dut.output_audio == 16'hC0DE)
+            else $error("FALHA PASSTHROUGH: Valor esperado na entrada do DAC Driver era C0DE, mas foi %h", dut.output_audio);
         
-        $display("... Valor correto (%h) chegou à entrada do dac_driver.", dut.audio_selected_16b);
+        $display("... Valor correto (%h) chegou à entrada do dac_driver.", dut.output_audio);
+        $display("Valor de saída truncado em dac_driver (%h)", dut.spi_miso_out);
         $display("TESTE PASSTHROUGH: Concluído com sucesso!");
         
         // Espera um pouco antes de terminar
