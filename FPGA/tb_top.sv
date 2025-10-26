@@ -80,7 +80,7 @@ module tb_top;
         tb_spi_pico_mosi  <= 1'b0;
         tb_spi_pico_cs    <= 1'b0; // CS inativo
         tb_bypass_switch  <= 1'b1; // **IMPORTANTE: Coloca no modo BYPASS**
-        tb_spi_dac_miso   <= 1'bz; // Deixa a entrada MISO flutuando (alta impedância)
+        tb_spi_dac_miso   <= 1'b0; // Deixa a entrada MISO flutuando (alta impedância)
         
         #100ns; // Espera 100 ns
 
@@ -101,7 +101,7 @@ module tb_top;
         // Precisamos usar o caminho hierárquico para acessá-lo.
         @(posedge dut.data_is_ready); 
         $display("... Pulso 'data_is_ready' (interno do DUT) detectado!(%h)", dut.data_is_ready);
-        $display("... Conteudo em mosi_out!(%h)", dut.spi_miso_out);
+        $display("... Conteudo em mosi_out!(%h)", dut.spi_mosi_out);
 
         // Espera mais um ciclo para o MUX atualizar sua saída
         @(posedge tb_clk_25mhz);
@@ -113,7 +113,7 @@ module tb_top;
             else $error("FALHA PASSTHROUGH: Valor esperado na entrada do DAC Driver era C0DE, mas foi %h", dut.output_audio);
         
         $display("... Valor correto (%h) chegou à entrada do dac_driver.", dut.output_audio);
-        $display("Valor de saída truncado em dac_driver (%h)", dut.spi_miso_out);
+        $display("Valor de saída truncado em dac_driver (%h)", dut.spi_mosi_out);
         $display("TESTE PASSTHROUGH: Concluído com sucesso!");
         
         // Espera um pouco antes de terminar
