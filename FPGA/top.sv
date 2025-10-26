@@ -1,10 +1,9 @@
 module top#(
-    parameter int unsigned clock_max = 25_000_000,
-    parameter int unsigned audio_clk = 400
+    parameter int unsigned clock_max = 25_000_000
 )(
     //entradas globais
     input logic clk_25mhz, reset, 
-    input logic mode_sound, //um botão que ativa o audio modificado,  
+    //input logic mode_sound, //um botão que ativa o audio modificado,  
 
     //pinos de entrada de dados SPI, comunication.sv
     input logic com_sclk_in, com_mosi_in, com_active,
@@ -42,7 +41,7 @@ logic modified_status; //armazena se aplicação de efeito terminou
         );
 
 //passagem da faixa de audio, original ou modificada,
-mode_sound = 1'b0; 
+logic mode_sound = 1'b0; 
 assign output_audio = (mode_sound)?  modified_audio: original_audio;
 
 //copia modulo dac_driver
@@ -55,7 +54,7 @@ assign output_audio = (mode_sound)?  modified_audio: original_audio;
             .reset(reset),
 
             //saidas do dac -> amplificador
-            .sclk_out(spi_audio_clk), 
+            .sclk_out(spi_audio_clk), //SCLK_OUT está muito mais lento do que preciso 
             .mosi_out(spi_mosi_out),
             .active_out(spi_active_out), 
             .miso_out(spi_miso_out) 

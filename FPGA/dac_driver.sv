@@ -24,7 +24,7 @@ typedef enum logic {
 state_t state;
 
 //geração do clock para comunicação com slave SPI, tecnica vista em sala
-localparam int sclk_div_count = 5; //para clock de 2mhz
+localparam int sclk_div_count = 5; //para clock de 2mhz, um pulso a cada 
 logic [$clog2(sclk_div_count) -1:0] count_clock = '0; //var de tamanho de 2Mhz, para contar pulsos
 logic internal_clock = 1'b0;
 
@@ -85,15 +85,18 @@ always_ff @(posedge clk_25mhz or posedge reset) begin
             active_out <= 1'b0;
 
             if(count_clock == sclk_div_count) begin 
-                if(bit_counter == 4'd15) begin 
-                    mosi_out <= shift_reg[15];
-                    shift_reg <= shift_reg << 1; //desliza bits, do maior para menor
-                    bit_counter <= bit_counter + 1;
-                
-                end else begin //após mandar uma amostra, volta para DAC_IDLE e espera próximo sinal data_ready
-                    state <= DAC_IDLE;
-                    active_out <= 1'b1;
-                    busy <= 1'b0;
+                if(internal_clock == 1'b0) begin 
+                    if(bit_counter < 16) begin 
+                        mosi_out <= shift_reg[15];
+                        shift_reg <= shift_reg << 1; //desliza bits, do maior para menor
+                        bit_counter <= bit_counter + 1;
+                        state <= DAC_TRANSFER;
+                    
+                    end else begin //após mandar uma amostra, volta para DAC_IDLE e espera próximo sinal data_ready
+                        state <= DAC_IDLE;
+                        active_out <= 1'b1;
+                        busy <= 1'b0;
+                    end
                 end
             end
 
