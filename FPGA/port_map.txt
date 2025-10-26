@@ -8,7 +8,7 @@ FREQUENCY PORT "clk" 25 MHz;
 
 
 # ============================================================
-# MODULE COMUNICATION (SCLK_IN, MOSI_IN, ACTIVE, RESET,) — entradas com pull-up
+# MODULE COMUNICATION (SCLK_IN, MOSI_IN, ACTIVE, RESET,MODE_SOUND) — entradas com pull-up
 # Ordem: PT65B, PT65A, PL14D, PT67B, PL23D
 # ============================================================
 LOCATE COMP "sclk_in" SITE "B20"; IOBUF PORT "sclk_in" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PT67B B20

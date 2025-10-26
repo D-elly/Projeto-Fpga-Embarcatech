@@ -18,7 +18,7 @@ module tb_top;
 
     // Sinais para conectar às SAÍDAS do DUT (pedal_top)
     wire         w_spi_dac_sclk;
-    wire        [15:0] w_spi_dac_mosi;
+    wire        w_spi_dac_mosi;
     wire         w_spi_dac_cs;
 
     // --- 3. Instanciar o DUT (Device Under Test) ---
@@ -101,6 +101,7 @@ module tb_top;
         // Precisamos usar o caminho hierárquico para acessá-lo.
         @(posedge dut.data_is_ready); 
         $display("... Pulso 'data_is_ready' (interno do DUT) detectado!(%h)", dut.data_is_ready);
+        $display("... Conteudo em mosi_out!(%h)", dut.spi_miso_out);
 
         // Espera mais um ciclo para o MUX atualizar sua saída
         @(posedge tb_clk_25mhz);
