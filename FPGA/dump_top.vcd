@@ -1,5 +1,5 @@
 $date
-	Fri Oct 24 16:12:35 2025
+	Sat Oct 25 23:42:07 2025
 $end
 $version
 	Icarus Verilog
@@ -9,7 +9,7 @@ $timescale
 $end
 $scope module tb_top $end
 $var wire 1 ! w_spi_dac_sclk $end
-$var wire 16 " w_spi_dac_mosi [15:0] $end
+$var wire 1 " w_spi_dac_mosi $end
 $var wire 1 # w_spi_dac_cs $end
 $var parameter 32 $ CLK_PERIOD $end
 $var parameter 32 % SPI_PICO_SCLK_PERIOD $end
@@ -25,18 +25,19 @@ $var wire 1 ' clk_25mhz $end
 $var wire 1 * com_active $end
 $var wire 1 + com_mosi_in $end
 $var wire 1 , com_sclk_in $end
+$var wire 1 - mode_sound $end
 $var wire 1 ( reset $end
-$var wire 12 - spi_miso_out [11:0] $end
+$var wire 1 . spi_miso_out $end
+$var wire 1 " spi_mosi_out $end
 $var wire 1 ! spi_audio_clk $end
 $var wire 1 # spi_active_out $end
-$var wire 16 . output_audio [15:0] $end
-$var wire 16 / original_audio [15:0] $end
-$var wire 1 0 modified_status $end
-$var wire 16 1 modified_audio [15:0] $end
-$var wire 1 2 data_is_ready $end
-$var parameter 32 3 audio_clk $end
-$var parameter 32 4 clock_max $end
-$var reg 16 5 spi_mosi_out [15:0] $end
+$var wire 16 / output_audio [15:0] $end
+$var wire 16 0 original_audio [15:0] $end
+$var wire 1 1 modified_status $end
+$var wire 16 2 modified_audio [15:0] $end
+$var wire 1 3 data_is_ready $end
+$var parameter 32 4 audio_clk $end
+$var parameter 32 5 clock_max $end
 $scope module u_comunication $end
 $var wire 1 * active $end
 $var wire 1 ' clk_25mhz $end
@@ -47,58 +48,72 @@ $var wire 1 6 sclk_posedge $end
 $var parameter 32 7 clock_max $end
 $var reg 16 8 audio_out [15:0] $end
 $var reg 4 9 bit_counter [3:0] $end
-$var reg 1 2 data_ready $end
+$var reg 1 3 data_ready $end
 $var reg 1 : sclk_d1 $end
 $var reg 1 ; sclk_d2 $end
 $var reg 16 < shift_reg [15:0] $end
 $var reg 1 = state $end
 $upscope $end
 $scope module u_dac_driver $end
-$var wire 1 2 data_ready $end
+$var wire 1 ' clk_25mhz $end
+$var wire 1 3 data_ready $end
+$var wire 1 . miso_out $end
 $var wire 16 > mosi_in [15:0] $end
-$var wire 12 ? miso_out [11:0] $end
-$var parameter 32 @ clock_max $end
+$var wire 1 ( reset $end
+$var wire 1 ! sclk_out $end
+$var parameter 32 ? clock_max $end
+$var parameter 32 @ sclk_div_count $end
 $var reg 1 # active_out $end
-$var reg 1 A audio_clock $end
-$var reg 1 ! sclk_out $end
+$var reg 4 A bit_counter [3:0] $end
+$var reg 1 B busy $end
+$var reg 3 C count_clock [2:0] $end
+$var reg 1 D internal_clock $end
+$var reg 1 " mosi_out $end
+$var reg 16 E shift_reg [15:0] $end
+$var reg 1 F state $end
 $upscope $end
 $scope module u_eff_1 $end
-$var wire 16 B audio_in [15:0] $end
+$var wire 16 G audio_in [15:0] $end
 $var wire 1 ' clk_25mhz $end
-$var wire 1 2 data_ready $end
-$var parameter 16 C CLIP_LEVEL $end
-$var parameter 32 D clock_max $end
-$var reg 16 E audio_out [15:0] $end
-$var reg 1 0 process_status $end
+$var wire 1 3 data_ready $end
+$var parameter 16 H CLIP_LEVEL $end
+$var parameter 32 I clock_max $end
+$var reg 16 J audio_out [15:0] $end
+$var reg 1 1 process_status $end
 $upscope $end
 $upscope $end
 $scope task send_spi_word $end
-$var reg 16 F data_word [15:0] $end
+$var reg 16 K data_word [15:0] $end
 $scope begin $ivl_for_loop0 $end
-$var integer 32 G i [31:0] $end
+$var integer 32 L i [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 $comment Show the parameter values. $end
 $dumpall
-b1011111010111100001000000 D
-b10011100010000 C
-b1011111010111100001000000 @
+b1011111010111100001000000 I
+b10011100010000 H
+b101 @
+b1011111010111100001000000 ?
 b1011111010111100001000000 7
-b1011111010111100001000000 4
-b110010000 3
+b1011111010111100001000000 5
+b110010000 4
 b111110100 %
 b101000 $
 $end
 #0
 $dumpvars
+b0 L
+bx K
+bx J
 b0 G
-bx F
+0F
 bx E
-b0 B
-0A
-bx ?
+0D
+b0 C
+0B
+b0 A
 bx >
 0=
 b0 <
@@ -107,13 +122,13 @@ x:
 b0 9
 b0 8
 x6
-bx 5
-02
-bx 1
-x0
-b0 /
-bx .
-bx -
+03
+bx 2
+x1
+b0 0
+bx /
+z.
+z-
 0,
 0+
 0*
@@ -121,20 +136,18 @@ z)
 1(
 0'
 1&
-x#
-bx "
-x!
+1#
+0"
+0!
 $end
 #20000
 06
-b0 -
-b0 ?
-b0 .
+b0 /
 b0 >
 0:
-b0 1
-b0 E
-00
+b0 2
+b0 J
+01
 1'
 #40000
 0'
@@ -145,7 +158,7 @@ b0 E
 0'
 #100000
 0(
-b1100000011011110 F
+b1100000011011110 K
 1'
 #120000
 0'
@@ -162,7 +175,7 @@ b1100000011011110 F
 #220000
 1+
 1'
-b1111 G
+b1111 L
 #240000
 0'
 #260000
@@ -222,7 +235,7 @@ b1 <
 #720000
 0,
 0'
-b1110 G
+b1110 L
 #740000
 0:
 1'
@@ -285,7 +298,7 @@ b11 <
 0+
 0,
 1'
-b1101 G
+b1101 L
 #1240000
 0'
 #1260000
@@ -347,7 +360,7 @@ b110 <
 #1720000
 0,
 0'
-b1100 G
+b1100 L
 #1740000
 0:
 1'
@@ -409,7 +422,7 @@ b1100 <
 #2220000
 0,
 1'
-b1011 G
+b1011 L
 #2240000
 0'
 #2260000
@@ -471,7 +484,7 @@ b11000 <
 #2720000
 0,
 0'
-b1010 G
+b1010 L
 #2740000
 0:
 1'
@@ -533,7 +546,7 @@ b110000 <
 #3220000
 0,
 1'
-b1001 G
+b1001 L
 #3240000
 0'
 #3260000
@@ -595,7 +608,7 @@ b1100000 <
 #3720000
 0,
 0'
-b1000 G
+b1000 L
 #3740000
 0:
 1'
@@ -658,7 +671,7 @@ b11000000 <
 1+
 0,
 1'
-b111 G
+b111 L
 #4240000
 0'
 #4260000
@@ -720,7 +733,7 @@ b110000001 <
 #4720000
 0,
 0'
-b110 G
+b110 L
 #4740000
 0:
 1'
@@ -783,7 +796,7 @@ b1100000011 <
 0+
 0,
 1'
-b101 G
+b101 L
 #5240000
 0'
 #5260000
@@ -846,7 +859,7 @@ b11000000110 <
 1+
 0,
 0'
-b100 G
+b100 L
 #5740000
 0:
 1'
@@ -908,7 +921,7 @@ b110000001101 <
 #6220000
 0,
 1'
-b11 G
+b11 L
 #6240000
 0'
 #6260000
@@ -970,7 +983,7 @@ b1100000011011 <
 #6720000
 0,
 0'
-b10 G
+b10 L
 #6740000
 0:
 1'
@@ -1032,7 +1045,7 @@ b11000000110111 <
 #7220000
 0,
 1'
-b1 G
+b1 L
 #7240000
 0'
 #7260000
@@ -1095,7 +1108,7 @@ b110000001101111 <
 0+
 0,
 0'
-b0 G
+b0 L
 #7740000
 0:
 1'
@@ -1131,62 +1144,82 @@ b0 G
 #8000000
 0'
 #8020000
-b110000001101 -
-b110000001101 ?
 06
-b1100000011011110 .
+b1100000011011110 /
 b1100000011011110 >
 b0 9
-12
-b1100000011011110 /
+13
+b1100000011011110 0
 b1100000011011110 8
-b1100000011011110 B
+b1100000011011110 G
 b1100000011011110 <
 1;
 1'
 #8040000
 0'
 #8060000
-02
-b1101100011110000 1
-b1101100011110000 E
-10
+03
+1B
+0#
+b1000110000001101 E
+1F
+b1101100011110000 2
+b1101100011110000 J
+11
 1'
 #8080000
 0'
 #8100000
-b0 1
-b0 E
-00
+1B
+b1 C
+b0 2
+b0 J
+01
 1'
 #8120000
 0'
 #8140000
+b10 C
+1B
 1'
 #8160000
 0'
 #8180000
+1B
+b11 C
 1'
 #8200000
 0'
 #8220000
+b100 C
+1B
 0,
 1'
-b11111111111111111111111111111111 G
+b11111111111111111111111111111111 L
 #8240000
 0'
 #8260000
+1B
+b101 C
 0:
 1'
 #8280000
 0'
 #8300000
+1!
+1D
+b0 C
+1#
+0F
+0B
 0;
 0*
 1'
 #8320000
 0'
 #8340000
+0!
+0D
 0=
 1'
 #8360000
