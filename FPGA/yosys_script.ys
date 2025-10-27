@@ -1,0 +1,2 @@
+read_verilog -sv comunication.sv dac_driver.sv eff_1.sv top.sv
+synth_ecp5 -top top -json top.json

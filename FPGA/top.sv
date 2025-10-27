@@ -9,10 +9,12 @@ module top#(
     input logic com_sclk_in, com_mosi_in, com_active,
 
     //pinos de saida de dados do dac_driver.sv
-    output logic spi_audio_clk, 
+    output logic spi_sclk_out, 
     output logic spi_mosi_out, 
     output logic spi_active_out,
-    input logic  spi_miso_out
+    input logic  spi_miso_out,
+
+    output logic teste_mosi
 );
 
 logic data_is_ready;  //sinal interno do top-level
@@ -54,11 +56,12 @@ assign output_audio = (mode_sound)?  modified_audio: original_audio;
             .reset(reset),
 
             //saidas do dac -> amplificador
-            .sclk_out(spi_audio_clk), //SCLK_OUT está muito mais lento do que preciso 
-            .mosi_out(spi_mosi_out),
-            .active_out(spi_active_out), 
-            .miso_out(spi_miso_out) 
+            .spi_sclk_out(spi_sclk_out),
+            .spi_mosi_out(spi_mosi_out),
+            .spi_active_out(spi_active_out),
+            .spi_miso_out(spi_miso_out)
     );
 
+assign teste_mosi = spi_mosi_out;
 
 endmodule

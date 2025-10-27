@@ -13,12 +13,11 @@ module comunication #(
     output logic [15:0] audio_out  //testar se pacotes de 16 bits fazem uma transnmissão lisa
 );
 
-typedef enum logic {
-        IDLE,    
-        RECEIVING  
-    } state_t;
+// Use explicit localparam-based states to avoid Yosys enum handling issues
+localparam logic [1:0] IDLE      = 2'd0;
+localparam logic [1:0] RECEIVING = 2'd1;
 
-state_t state;       
+logic [1:0] state;      
 logic [15:0] shift_reg; 
 logic [3:0]  bit_counter;
 
