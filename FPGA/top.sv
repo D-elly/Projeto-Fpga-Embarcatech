@@ -62,6 +62,6 @@ assign output_audio = (mode_sound)?  modified_audio: original_audio;
             .spi_miso_out(spi_miso_out)
     );
 
-assign teste_mosi = spi_mosi_out;
+assign teste_mosi = original_audio[15];
 
 endmodule
