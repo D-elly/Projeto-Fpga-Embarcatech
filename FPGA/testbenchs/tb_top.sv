@@ -35,9 +35,10 @@ module tb_top;
         //.bypass_switch  (tb_bypass_switch),
         
         //conexões modulo dac_driver
-        .spi_audio_clk   (w_spi_dac_sclk),
+        .spi_sclk_out   (w_spi_dac_sclk),
         .spi_mosi_out  (w_spi_dac_mosi),
         .spi_active_out     (w_spi_dac_cs)
+
     );
 
     // --- 4. Gerador de Clock Principal ---
