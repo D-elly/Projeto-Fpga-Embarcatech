@@ -1,9 +1,9 @@
 # ============================================================
 # CLOCK
 # ============================================================
-LOCATE    COMP "clk" SITE "P3";
-IOBUF     PORT "clk" IO_TYPE=LVCMOS33;
-FREQUENCY PORT "clk" 25 MHz;
+LOCATE    COMP "clk_25mhz" SITE "P3";
+IOBUF     PORT "clk_25mhz" IO_TYPE=LVCMOS33;
+FREQUENCY PORT "clk_25mhz" 25 MHz;
 # ============================================================
 
 
@@ -13,11 +13,11 @@ FREQUENCY PORT "clk" 25 MHz;
 # ============================================================
 
 #ENTRADA DE DADOS
-LOCATE COMP "sclk_in" SITE "B20"; IOBUF PORT "sclk_in" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PT67B B20
-LOCATE COMP "mosi_in"   SITE "A18"; IOBUF PORT "mosi_in"   IO_TYPE=LVCMOS33 PULLMODE=UP;  # PT65A A18
-LOCATE COMP "active"  SITE "E2";  IOBUF PORT "active"  IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL23D E2
+LOCATE COMP "com_sclk_in" SITE "B20"; IOBUF PORT "com_sclk_in" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PT67B B20
+LOCATE COMP "com_mosi_in"   SITE "A18"; IOBUF PORT "com_mosi_in"   IO_TYPE=LVCMOS33 PULLMODE=UP;  # PT65A A18
+LOCATE COMP "com_active"  SITE "E2";  IOBUF PORT "com_active"  IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL23D E2
 LOCATE COMP "reset"  SITE "C2"; IOBUF PORT "reset"  IO_TYPE=LVCMOS33 PULLMODE=UP;  # PL14D C2 
-LOCATE COMP "reset" SITE "B19";  IOBUF PORT "reset" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PT65B B19
+LOCATE COMP "teste_mosi" SITE "B19";  IOBUF PORT "teste_mosi" IO_TYPE=LVCMOS33 PULLMODE=UP;  # PT65B B19
 
 
 # ============================================================
@@ -25,11 +25,14 @@ LOCATE COMP "reset" SITE "B19";  IOBUF PORT "reset" IO_TYPE=LVCMOS33 PULLMODE=UP
 # Ordem: PR23D, PR38D, PR32C, PR26A, PR29C, PR17D, PR29D, PR35A, PR47D
 # ============================================================
 
+
 #SAÍDA DE DADOS PARA CONECTAR FPGA -> DAC FÍSICO
-LOCATE COMP "sclk_out" SITE "L18"; IOBUF PORT "sclk_out" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR29C L18
-LOCATE COMP "mosi_out" SITE "L20"; IOBUF PORT "mosi_out" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR26A L20
-LOCATE COMP "active_out" SITE "N18"; IOBUF PORT "active_out" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR32C N18
-LOCATE COMP "miso_out" SITE "P18"; IOBUF PORT "miso_out" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR38D P18
+LOCATE COMP "data_ready" SITE "L18"; IOBUF PORT "data_ready" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR29C L18
+LOCATE COMP "com_miso_out" SITE "L20"; IOBUF PORT "com_miso_out" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR26A L20
+LOCATE COMP "spi_active_out" SITE "N18"; IOBUF PORT "spi_active_out" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR32C N18
+LOCATE COMP "spi_miso_out" SITE "P18"; IOBUF PORT "spi_miso_out" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=SLOW;  #  PR38D P18
+
+
 
 
 #--------------- NÃO ESTÃO SENDO USADOS -------------
