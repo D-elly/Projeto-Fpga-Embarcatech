@@ -11,7 +11,7 @@ module top #(
     input logic reset,
 
     output logic data_ready,
-    output logic [15:0] audio_out, // mantém saída para uso interno/testes
+   //output logic [15:0] audio_out, // mantém saída para uso interno/testes
     output logic teste_mosi // porta de saída no FPGA para eco dos bits recebidos (mapeada em port_map.lpf)
 );
 
@@ -22,6 +22,7 @@ localparam logic [1:0] RECEIVING = 2'd1;
 logic [1:0] state;      
 logic [15:0] shift_reg; 
 logic [3:0]  bit_counter;
+logic [15:0] audio_out;
 
 logic sclk_d1, sclk_d2; 
 
@@ -34,6 +35,8 @@ end
 logic sclk_posedge;  // detecta borda de subida do sclk sincronizada ao clk_25mhz
 assign sclk_posedge = (sclk_d1 == 1'b1) && (sclk_d2 == 1'b0);
 
+//assign teste_mosi = com_active;
+
 always_ff @(posedge clk_25mhz or posedge reset)
     begin
         if(reset == 1'b1) begin  // implementação do botão de desligar ou desativar comunicação
@@ -42,7 +45,7 @@ always_ff @(posedge clk_25mhz or posedge reset)
             bit_counter <= 4'b0000;
             data_ready <= 1'b0;
             audio_out <= 16'b0;
-            teste_mosi <= 1'b0;
+            //teste_mosi <= 1'b0;
         end else begin // a cada pulso de clk_25mhz, executar lógica sincronizada
             // limpando data_ready se estava ativado (pulse)
             if (data_ready == 1'b1) begin
@@ -51,7 +54,7 @@ always_ff @(posedge clk_25mhz or posedge reset)
 
             case(state)
                 IDLE: begin // modo ocioso, sem novos dados chegando
-                    if(com_active == 1'b1) begin
+                    if(com_active == 1'b0) begin
                         state <= RECEIVING;
                         shift_reg <= 16'b0;
                         bit_counter <= 4'b0000;
@@ -59,7 +62,7 @@ always_ff @(posedge clk_25mhz or posedge reset)
                 end  
 
                 RECEIVING: begin // estado em que a comunicação está acontecendo
-                    if(com_active == 1'b0) begin
+                    if(com_active == 1'b1) begin
                         state <= IDLE;
                     end else if (sclk_posedge) begin
                         // shift in o bit mais recente
