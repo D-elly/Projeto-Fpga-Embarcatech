@@ -12,7 +12,8 @@ module top #(
 
     output logic data_ready,
    //output logic [15:0] audio_out, // mantém saída para uso interno/testes
-    output logic teste_mosi // porta de saída no FPGA para eco dos bits recebidos (mapeada em port_map.lpf)
+    output logic teste_mosi, // porta de saída no FPGA para eco dos bits recebidos (mapeada em port_map.lpf)
+    output logic com_miso_out
 );
 
 // Use explicit localparam-based states to avoid Yosys enum handling issues
@@ -65,14 +66,17 @@ always_ff @(posedge clk_25mhz or posedge reset)
                     if(com_active == 1'b1) begin
                         state <= IDLE;
                     end else if (sclk_posedge) begin
-                        // shift in o bit mais recente
-                        shift_reg <= {shift_reg[14:0], com_mosi_in};
+                        // funcionando com MSB
+                        shift_reg <= {com_mosi_in, shift_reg[15:1]};
+                        //shift_reg <= {shift_reg[14:0], com_mosi_in};
 
                         // ecoa o bit recebido para a porta física de teste
                         teste_mosi <= com_mosi_in;
+                        com_miso_out <= teste_mosi;
 
-                        if(bit_counter == 4'd15) begin
-                            audio_out <= {shift_reg[14:0], com_mosi_in};
+                        if(bit_counter < 16) begin
+                            audio_out <= {com_mosi_in, shift_reg[15:1]};
+                            //audio_out <= {shift_reg[14:0], com_mosi_in};
                             state <= RECEIVING;
                             data_ready <= 1'b1;
                             bit_counter <= 4'b0000;
